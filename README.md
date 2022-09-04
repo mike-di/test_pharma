@@ -1,9 +1,13 @@
 # test_pharma
 
 Etapes du DAG
+
 #1. Instantiation du cluster dataproc en utilisant un script init (pour communiquer les env vars composer/airflow) + selection d'une custom image familly
+
 #2. Lancement du premier traitement (géneration du JSON resutlat)
+
 #3. Lancement du traitement adhoc
+
 #4. decomissionnement du cluster crée en 1
 
 
