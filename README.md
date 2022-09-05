@@ -30,7 +30,8 @@ passer les traitement sur un filesystem plus conséquent (GCS par exemple) et no
 
 
 II) SQL
-** 
+
+
 les tests ont été fait sur une base de données ORACLE
 en ligne sur sqlfiddle.com et choisir oracle 11gR2
 
