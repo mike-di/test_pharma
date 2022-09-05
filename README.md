@@ -30,12 +30,12 @@ passer les traitement sur un filesystem plus conséquent (GCS par exemple) et no
 
 
 II) SQL
-
+** 
 les tests ont été fait sur une base de données ORACLE
 en ligne sur sqlfiddle.com et choisir oracle 11gR2
 
 creation des tables depuis les données exemples
-
+```
 CREATE TABLE TRANSACTIONS (
    date_t       DATE  NOT NULL 
   ,order_id   INTEGER  NOT NULL
@@ -44,6 +44,7 @@ CREATE TABLE TRANSACTIONS (
   ,prod_price FLOAT
   ,prod_qty   INTEGER
 );
+
 INSERT INTO TRANSACTIONS(date_t,order_id,client_id,prod_id,prod_price,prod_qty) VALUES (TO_DATE('01/01/2020', 'DD/MM/YYYY'),1234,999,490756,50,1);
 INSERT INTO TRANSACTIONS(date_t,order_id,client_id,prod_id,prod_price,prod_qty) VALUES (TO_DATE('01/01/2020', 'DD/MM/YYYY'),1234,999,389728,3.56,4);
 INSERT INTO TRANSACTIONS(date_t,order_id,client_id,prod_id,prod_price,prod_qty) VALUES (TO_DATE('01/01/2020', 'DD/MM/YYYY'),3456,845,490756,50,2);
@@ -63,13 +64,12 @@ INSERT INTO PRODUCT_NOMENCLATURE(product_id,product_type,product_name) VALUES (2
 
 
 
-
------------------------------------------------------------------------------------------------
+```
 Question 1:
 
-afin d'obtenir le chiffre d'affaire pour un jour donnée on genere un calendrier à partir de 2019 ensuite on applique une jointure avec la table transaction pour obtenir le chiffre d'affaire par jour:
------------------------------------------------------------------------------------------------
+afin d'obtenir le chiffre d'affaire pour un jour donnée on genere un calendrier à partir de 2019 ensuite on applique une jointure avec la table transactions pour obtenir le chiffre d'affaire par jour
 
+```
 with calendar as (
         select rownum - 1 as daynum
         from dual
@@ -86,14 +86,13 @@ ON date_c=TRANSACTIONS.date_t
 group by date_c
 ORDER BY date_c;
 
-
------------------------------------------------------------------------------------------------
+```
 Question 2:
 
-pour obtenir les ventes et déco réalisées pour chaque clients on mets en place des cases when ainsi que des jointures entre les tables TRANSACTIONS ainsi que PRODUCT_NOMENCLATURE pour obtenir les ventes par client
+pour obtenir les ventes et déco réalisées pour chaque clients on mets en place des cases when ainsi que des jointures entre les tables transactions ainsi que product_nomenclature pour obtenir les ventes par client
 
 -----------------------------------------------------------------------------------------------
-
+```
 SELECT TRANSACTIONS.client_id,
 sum(CASE
     WHEN  PRODUCT_NOMENCLATURE.product_type='MEUBLE'  
@@ -107,4 +106,4 @@ FROM TRANSACTIONS
 LEFT JOIN PRODUCT_NOMENCLATURE ON TRANSACTIONS.prod_id=PRODUCT_NOMENCLATURE.product_id
 WHERE TRANSACTIONS.date_t BETWEEN TO_DATE('01/01/2019', 'DD/MM/YYYY') and TO_DATE('31/12/2019', 'DD/MM/YYYY')
 GROUP BY TRANSACTIONS.client_id;
-
+```
